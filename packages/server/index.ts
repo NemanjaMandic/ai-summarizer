@@ -12,7 +12,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/api/hello', (req: Request, res: Response) => {
-  res.send(`Djesi kralju`);
+  res.json({ message: `Djesi kralju` });
 });
 
 app.listen(PORT, () => {
