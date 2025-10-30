@@ -2,18 +2,10 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": { "project": ["tsconfig.json"] },
   "plugins": ["html", "@typescript-eslint", "import"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "next/core-web-vitals",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "next/core-web-vitals", "prettier"],
   "overrides": [
     {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
+      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
       "extends": ["plugin:testing-library/react"]
     }
   ],
