@@ -1,4 +1,3 @@
   Summarize the following reviews into a short, 
   concise paragraph highlighting the main points, 
   both positive and negative:
-  {{reviews}}

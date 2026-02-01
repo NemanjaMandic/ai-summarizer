@@ -1,8 +1,12 @@
+import { InferenceClient } from '@huggingface/inference';
 import OpenAI from 'openai';
+import summarizePrompt from './prompts/summarize-reviews.txt';
 
-export const client = new OpenAI({
+export const openAiClient = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+const inferenceClient = new InferenceClient(process.env.HF_TOKEN);
 
 type GenerateTextOptions = {
   model?: string;
@@ -26,7 +30,7 @@ const generateText = async ({
   instructions,
   previousResponseId,
 }: GenerateTextOptions): Promise<ChatResponse> => {
-  const response = await client.responses.create({
+  const response = await openAiClient.responses.create({
     model,
     input: prompt,
     temperature,
@@ -41,6 +45,26 @@ const generateText = async ({
   };
 };
 
+const summarizeReviews = async (reviews: string) => {
+  const chatCompletion = await inferenceClient.chatCompletion({
+    model: 'meta-llama/Llama-3.1-8B-Instruct:sambanova',
+    messages: [
+      {
+        role: 'system',
+        content:
+          ' Summarize the following reviews into a short, \n  concise paragraph highlighting the main points, \n  both positive and negative:',
+      },
+      {
+        role: 'user',
+        content: reviews,
+      },
+    ],
+  });
+
+  return chatCompletion.choices[0]?.message.content || '';
+};
+
 export const llmClient = {
   generateText,
+  summarizeReviews,
 };

@@ -28,6 +28,7 @@
     ]
   },
   "dependencies": {
+    "@huggingface/inference": "^4.13.11",
     "axios": "^1.12.2",
     "react-hook-form": "^7.63.0",
     "react-icons": "^5.5.0",

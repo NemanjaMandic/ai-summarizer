@@ -1,10 +1,13 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 import { llmClient } from '../llm/client';
-import template from '../prompts/chat.txt';
+import template from '../llm/prompts/chat.txt';
 import { conversationRepository } from '../repositories/conversation';
 
-const parkInfo = readFileSync(path.join(__dirname, '..', 'prompts', 'WonderWorld.md'), 'utf-8');
+const parkInfo = readFileSync(
+  path.join(__dirname, '..', '/llm/prompts', 'WonderWorld.md'),
+  'utf-8',
+);
 
 const instructions = template.replace('{{reviews}}', parkInfo);
 
