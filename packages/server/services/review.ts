@@ -1,6 +1,4 @@
-import type { Summary } from '../generated/prisma';
 import { llmClient } from '../llm/client';
-import template from '../prompts/summarize-reviews.txt';
 import { reviewRepository } from '../repositories/review';
 
 const summarizeReviews = async (productId: number): Promise<string> => {
@@ -14,14 +12,9 @@ const summarizeReviews = async (productId: number): Promise<string> => {
 
   const reviewContents = reviews.map((review) => review.content).join('\n\n');
 
-  const summaryPrompt = template.replace('{{reviews}}', reviewContents);
+  // const summaryPrompt = template.replace('{{reviews}}', reviewContents);
 
-  const { text: summary } = await llmClient.generateText({
-    model: 'gpt-4.1',
-    prompt: summaryPrompt,
-    temperature: 0.2,
-    maxTokens: 500,
-  });
+  const summary = await llmClient.summarizeReviews(reviewContents);
 
   await reviewRepository.storeReviewSummary(productId, summary);
   return summary;
